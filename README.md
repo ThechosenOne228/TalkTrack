@@ -1,77 +1,99 @@
-# TalkTrack: AI-Powered Meeting Intelligence Platform
+# TalkTrack - AI-Powered Meeting Summarizer
 
-![TalkTrack Logo](https://img.shields.io/badge/TalkTrack-AI%20Meeting%20Intelligence-blue)
-![License](https://img.shields.io/badge/license-MIT-green)
+TalkTrack is a dual-mode application that helps you capture, transcribe, and summarize meetings using AI. It works both as a standalone web app and as a Chrome extension.
 
-TalkTrack is an innovative AI-powered platform that transforms meeting audio into actionable insights, summaries, and structured action items. Built with modern web technologies and leveraging advanced AI capabilities, TalkTrack helps teams maximize their meeting productivity and ensure no important details are missed.
+## Features
 
-## 🚀 Features
+- 🎙️ Record audio from meetings
+- 📝 Automatic transcription using OpenAI's Whisper
+- 🧠 AI-powered meeting summaries
+- ✅ Action item extraction
+- 📤 Optional Slack integration
+- 🌐 Works offline after first load
+- 📱 Mobile-friendly design
 
-- **Real-time Audio Processing**: Upload and process meeting recordings in various formats (MP3, WAV)
-- **AI-Powered Summarization**: Generate concise, accurate meeting summaries
-- **Action Item Extraction**: Automatically identify and extract action items and tasks
-- **Full Transcript Generation**: Get complete meeting transcripts for reference
-- **Slack Integration**: Seamlessly share meeting insights with your team
-- **Modern, Responsive UI**: Built with Tailwind CSS for a beautiful, intuitive experience
+## Web App Mode
 
-## 🛠️ Technology Stack
+The web app is a fully client-side application that can be used to upload and process audio files from meetings.
 
-- **Frontend**: HTML5, Tailwind CSS, JavaScript
-- **AI/ML**: Advanced Natural Language Processing
-- **Integration**: Slack API
-- **Performance**: Optimized for real-time processing
-- **Security**: Secure file handling and data processing
+### Usage
 
-## 🎯 Use Cases
+1. Open `index.html` in your browser
+2. Drag and drop an audio file or click to browse
+3. Wait for processing
+4. View transcript, summary, and action items
+5. Optionally send to Slack
 
-- **Team Meetings**: Capture and distribute meeting outcomes efficiently
-- **Client Calls**: Generate professional summaries for client interactions
-- **Project Updates**: Track action items and project progress
-- **Training Sessions**: Create searchable transcripts of training materials
-- **Remote Collaboration**: Bridge communication gaps in distributed teams
+## Chrome Extension Mode
 
-## 🚀 Getting Started
+The Chrome extension allows you to capture audio directly from your browser tabs (e.g., Google Meet).
 
-1. Clone the repository:
-```bash
-git clone https://github.com/yourusername/talktrack.git
-```
+### Installation
 
-2. Open `index.html` in your browser or set up a local server:
-```bash
-python -m http.server 8000
-```
+1. Clone this repository
+2. Open Chrome and go to `chrome://extensions/`
+3. Enable "Developer mode"
+4. Click "Load unpacked"
+5. Select the `extension` folder
 
-3. Start using TalkTrack by uploading your meeting audio files!
+### Usage
 
-## 🔧 Configuration
+1. Click the TalkTrack icon in your browser toolbar
+2. Click "Start Recording" to begin capturing audio
+3. Click "Stop Recording" when finished
+4. View the transcript, summary, and action items
+5. Optionally send to Slack
 
-To enable Slack integration:
-1. Create a Slack App in your workspace
-2. Add the webhook URL to the Slack integration section
-3. Start sharing meeting insights directly to your Slack channels
+## API Keys Required
 
-## 🤝 Contributing
+To use TalkTrack, you'll need:
 
-We welcome contributions! Please feel free to submit a Pull Request. For major changes, please open an issue first to discuss what you would like to change.
+1. OpenAI API key for Whisper transcription
+2. OpenAI API key for GPT-4 summarization
+3. (Optional) Slack webhook URL for integration
 
-## 📝 License
+## Development
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+### Web App
 
-## 🔮 Future Enhancements
+The web app is built with:
+- HTML5
+- Tailwind CSS (via CDN)
+- Vanilla JavaScript
+- React (via CDN)
 
-- [ ] Real-time meeting transcription
-- [ ] Speaker diarization
-- [ ] Sentiment analysis
-- [ ] Meeting analytics dashboard
-- [ ] Integration with popular calendar apps
-- [ ] Mobile application
+### Chrome Extension
 
-## 📫 Contact
+The extension uses:
+- Manifest V3
+- Chrome Tab Capture API
+- Chrome Storage API
+- Chrome Messaging API
 
-For questions and support, please open an issue in the GitHub repository.
+## License
 
----
+MIT License
 
-Built with ❤️ for better meeting productivity 
+Copyright (c) 2024 TalkTrack
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request. 

@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TalkTrack Setup Test</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <div class="max-w-2xl mx-auto p-8">
+        <div class="text-center mb-8">
+            <h1 class="text-3xl font-bold text-gray-900">TalkTrack Setup Test</h1>
+            <p class="text-gray-600 mt-2">Verify your configuration is working correctly</p>
+        </div>
+
+        <div class="space-y-6">
+            <!-- OpenAI API Key Test -->
+            <div class="bg-white rounded-lg shadow p-6">
+                <h2 class="text-xl font-semibold text-gray-900 mb-4">OpenAI API Key</h2>
+                <div class="space-y-4">
+                    <div class="flex space-x-2">
+                        <input type="password" id="openaiKey" placeholder="Enter your OpenAI API key" class="flex-1 rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                        <button id="testApiKey" class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">Test Key</button>
+                    </div>
+                    <div id="apiKeyResult" class="hidden">
+                        <div class="flex items-center space-x-2">
+                            <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"></svg>
+                            <span class="text-sm"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slack Webhook Test -->
+            <div class="bg-white rounded-lg shadow p-6">
+                <h2 class="text-xl font-semibold text-gray-900 mb-4">Slack Webhook</h2>
+                <div class="space-y-4">
+                    <div class="flex space-x-2">
+                        <input type="text" id="webhookUrl" placeholder="Enter your Slack webhook URL" class="flex-1 rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                        <button id="testWebhook" class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">Test Webhook</button>
+                    </div>
+                    <div id="webhookResult" class="hidden">
+                        <div class="flex items-center space-x-2">
+                            <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"></svg>
+                            <span class="text-sm"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Browser Support Test -->
+            <div class="bg-white rounded-lg shadow p-6">
+                <h2 class="text-xl font-semibold text-gray-900 mb-4">Browser Support</h2>
+                <div id="browserSupport" class="space-y-2">
+                    <div class="flex items-center justify-between">
+                        <span class="text-gray-700">MediaRecorder API</span>
+                        <span class="text-gray-500">Checking...</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-gray-700">WebM Audio Support</span>
+                        <span class="text-gray-500">Checking...</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-gray-700">Chrome Extension API</span>
+                        <span class="text-gray-500">Checking...</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Utility function to show test results
+        function showResult(element, success, message) {
+            element.classList.remove('hidden');
+            const icon = element.querySelector('svg');
+            const text = element.querySelector('span');
+            
+            if (success) {
+                icon.classList.remove('text-red-500');
+                icon.classList.add('text-green-500');
+                icon.innerHTML = '<path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>';
+            } else {
+                icon.classList.remove('text-green-500');
+                icon.classList.add('text-red-500');
+                icon.innerHTML = '<path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/>';
+            }
+            text.textContent = message;
+        }
+
+        // Test OpenAI API Key
+        document.getElementById('testApiKey').addEventListener('click', async () => {
+            const key = document.getElementById('openaiKey').value.trim();
+            const result = document.getElementById('apiKeyResult');
+            
+            if (!key) {
+                showResult(result, false, 'Please enter an API key');
+                return;
+            }
+
+            try {
+                const response = await fetch('https://api.openai.com/v1/models', {
+                    headers: {
+                        'Authorization': `Bearer ${key}`
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error('Invalid API key');
+                }
+
+                showResult(result, true, 'API key is valid');
+            } catch (error) {
+                showResult(result, false, 'Invalid API key: ' + error.message);
+            }
+        });
+
+        // Test Slack Webhook
+        document.getElementById('testWebhook').addEventListener('click', async () => {
+            const url = document.getElementById('webhookUrl').value.trim();
+            const result = document.getElementById('webhookResult');
+            
+            if (!url) {
+                showResult(result, false, 'Please enter a webhook URL');
+                return;
+            }
+
+            try {
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        text: 'TalkTrack webhook test message'
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error('Invalid webhook URL');
+                }
+
+                showResult(result, true, 'Webhook is working');
+            } catch (error) {
+                showResult(result, false, 'Invalid webhook URL: ' + error.message);
+            }
+        });
+
+        // Check Browser Support
+        function checkBrowserSupport() {
+            const support = document.getElementById('browserSupport');
+            const items = support.getElementsByTagName('div');
+
+            // Check MediaRecorder API
+            const hasMediaRecorder = typeof MediaRecorder !== 'undefined';
+            updateSupportItem(items[0], hasMediaRecorder, 'MediaRecorder API is supported', 'MediaRecorder API is not supported');
+
+            // Check WebM Audio Support
+            const hasWebM = MediaRecorder && MediaRecorder.isTypeSupported('audio/webm');
+            updateSupportItem(items[1], hasWebM, 'WebM audio is supported', 'WebM audio is not supported');
+
+            // Check Chrome Extension API
+            const hasChromeAPI = typeof chrome !== 'undefined' && chrome.runtime;
+            updateSupportItem(items[2], hasChromeAPI, 'Chrome Extension API is supported', 'Chrome Extension API is not supported');
+        }
+
+        function updateSupportItem(element, supported, successMessage, errorMessage) {
+            const status = element.querySelector('span:last-child');
+            if (supported) {
+                status.textContent = successMessage;
+                status.classList.remove('text-red-500');
+                status.classList.add('text-green-500');
+            } else {
+                status.textContent = errorMessage;
+                status.classList.remove('text-green-500');
+                status.classList.add('text-red-500');
+            }
+        }
+
+        // Run browser support check on load
+        checkBrowserSupport();
+    </script>
+</body>
+</html> 
